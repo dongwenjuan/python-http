@@ -21,4 +21,4 @@ try:
 
 except KeyboardInterrupt:
   server.server_close()
-  print('Test:Stopping server')
+  print('Stopping server')

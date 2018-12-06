@@ -20,12 +20,11 @@ pipeline {
         steps {
           container('python') {
             sh "python -m unittest"
-            sh "skaffold config set --global default-repo http://$DOCKER_REGISTRY/$ORG/$APP_NAM"
 
             sh 'export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml'
 
 
-            sh "jx step post build --image http://$DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
+            sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
           }
 
           dir ('./charts/preview') {
@@ -60,7 +59,7 @@ pipeline {
 
             sh 'export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml'
 
-            sh "jx step post build --image http://$DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
+            sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
           }
         }
       }
