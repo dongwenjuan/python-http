@@ -20,6 +20,7 @@ pipeline {
         steps {
           container('python') {
             sh "python -m unittest"
+            sh "skaffold config set --global default-repo http://$DOCKER_REGISTRY/$ORG/$APP_NAM"
 
             sh 'export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml'
 
